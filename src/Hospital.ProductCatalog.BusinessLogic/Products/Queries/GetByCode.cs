@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Hospital.ProductCatalog.BusinessLogic.Exceptions;
 using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +33,10 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Queries
 
         public async Task<ProductDTO> Handle(GetByCode request, CancellationToken cancellationToken = default)
         {
-            var product = await _context.Products.FindAsync(request.Code);
+            var product = await _context.Products
+                .Include(x => x.Barcodes)
+                .ProjectTo<ProductDTO>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync(x => x.Code == request.Code);
 
             if (product == null)
             {
