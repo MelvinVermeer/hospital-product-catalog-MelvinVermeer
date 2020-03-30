@@ -1,4 +1,6 @@
+using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
 using Hospital.ProductCatalog.DataAccess;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,9 @@ namespace Hospital.ProductCatalog.API
             // Let's go for an InMemory Database, this way we can use Entity Framework 
             // all the way through and whenever needed this can easily be swapped by real MSSQL.
             services.AddDbContext<ProductCatalogContext>(options => options.UseInMemoryDatabase("HospitalProductCatalog"));
+
+            // Any reference will do here. I prefer a type reference over Assembly name, to prevent magic strings 
+            services.AddMediatR(typeof(GetAll)); 
 
             services.AddSwaggerGen(options =>
             {

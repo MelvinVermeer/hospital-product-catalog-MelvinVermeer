@@ -1,5 +1,8 @@
-﻿using Hospital.ProductCatalog.DataAccess;
+﻿using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
+using Hospital.ProductCatalog.BusinessLogic.Exceptions;
+using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,17 +16,19 @@ namespace Hospital.ProductCatalog.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ProductCatalogContext _db;
+        private readonly IMediator _mediator;
 
-        public CategoriesController(ProductCatalogContext db)
+        public CategoriesController(ProductCatalogContext db, IMediator mediator)
         {
             _db = db;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Category>>> Get()
         {
-            return await _db.Categories.ToListAsync();
+            return await _mediator.Send(new GetAll());
         }
 
         [HttpGet("{code}")]
@@ -31,14 +36,14 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Category>> Get(int code)
         {
-            var category = await _db.Categories.FirstOrDefaultAsync(x => x.Code == code);
-
-            if (category == null)
+            try
+            {
+                return await _mediator.Send(new GetByCode(code));
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            return category;
         }
 
         [HttpPost]
