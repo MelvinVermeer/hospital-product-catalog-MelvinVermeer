@@ -5,6 +5,7 @@ This is product api created for a fictional hospital. Created for an assignment 
 ## Technology stack
 
 - ASP.NET Core 3.1
+- Entity Framework Core
 
 ## Requirements
 
