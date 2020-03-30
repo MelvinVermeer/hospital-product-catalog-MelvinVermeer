@@ -1,11 +1,10 @@
-﻿using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
+﻿using Hospital.ProductCatalog.BusinessLogic.Categories.Commands;
+using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
 using Hospital.ProductCatalog.BusinessLogic.Exceptions;
-using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,12 +14,10 @@ namespace Hospital.ProductCatalog.API.Controllers
     [Route("[controller]")]
     public class CategoriesController : ControllerBase
     {
-        private readonly ProductCatalogContext _db;
         private readonly IMediator _mediator;
 
-        public CategoriesController(ProductCatalogContext db, IMediator mediator)
+        public CategoriesController(IMediator mediator)
         {
-            _db = db;
             _mediator = mediator;
         }
 
@@ -48,34 +45,31 @@ namespace Hospital.ProductCatalog.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Category>> Post(Category category)
+        public async Task<ActionResult<Category>> Post(CreateCategory createCategory)
         {
-            _db.Categories.Add(category);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(Get), new { category.Code }, category);
+            var code = await _mediator.Send(createCategory);
+            return CreatedAtAction(nameof(Get), new { code });
         }
 
         [HttpPut("{code}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<Category>> Put(int code, Category category)
+        public async Task<ActionResult<Category>> Put(int code, UpdateCategory updateCategory)
         {
-            if (code != category.Code)
+            if (code != updateCategory.Code)
             {
                 return BadRequest();
             }
 
-            var dbCategory = await _db.Categories.FirstOrDefaultAsync(x => x.Code == code);
-            if (dbCategory == null)
+            try
+            {
+                await _mediator.Send(updateCategory);
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            dbCategory.Description = category.Description;
-
-            await _db.SaveChangesAsync();
 
             return NoContent();
         }
@@ -85,15 +79,14 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<Category>> Delete(int code)
         {
-            var category = await _db.Categories.FirstOrDefaultAsync(x => x.Code == code);
-
-            if (category == null)
+            try
+            {
+                await _mediator.Send(new DeleteCategory(code));
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            _db.Categories.Remove(category);
-            await _db.SaveChangesAsync();
 
             return NoContent();
         }
