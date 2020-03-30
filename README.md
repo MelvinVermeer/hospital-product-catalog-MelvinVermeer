@@ -14,6 +14,7 @@ can be found on [/swagger/index.html](http://localhost:5000/swagger/index.html)
 - Entity Framework Core
 - Swashbuckle - to automatically generate Swagger/OpenApi3 documentation and user Interface.
 - [MediatR](https://github.com/jbogard/MediatR) - to support CQRS Pattern (as talked about in our interview)
+- [Moq](https://github.com/moq/moq4) - Mocking framework for testing
 
 ## Requirements
 
