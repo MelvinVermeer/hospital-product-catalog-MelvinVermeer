@@ -1,0 +1,93 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Hospital Product Catalog",
+    "_postman_id": "93b97d2f-7802-2f13-20be-feb8e0071120",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Categories",
+      "description": "",
+      "item": [
+        {
+          "name": "http://localhost:5000/categories",
+          "request": {
+            "url": "http://localhost:5000/categories",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/categories/1",
+          "request": {
+            "url": "http://localhost:5000/categories/1",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/categories",
+          "request": {
+            "url": "http://localhost:5000/categories",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Implants\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/categories/1",
+          "request": {
+            "url": "http://localhost:5000/categories/1",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Consumables\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/categories/1",
+          "request": {
+            "url": "http://localhost:5000/categories/1",
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

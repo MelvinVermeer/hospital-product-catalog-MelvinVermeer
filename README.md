@@ -33,3 +33,5 @@ If you want to run all tests (unit + inegration) you can do so by running the fo
 ```
 dotnet test HospitalProductCatalog.sln
 ```
+
+To help you with some manual testing you could use [this postman collection](/tests/postman_collection.json), it contains examples for all of the available endpoints.
