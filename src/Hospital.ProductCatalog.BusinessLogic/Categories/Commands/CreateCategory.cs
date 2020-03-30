@@ -20,7 +20,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.Categories.Commands
             _context = context;
         }
 
-        public async Task<int> Handle(CreateCategory request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateCategory request, CancellationToken cancellationToken = default)
         {
             var category = new Category
             {
@@ -28,7 +28,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.Categories.Commands
             };
 
             _context.Categories.Add(category);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync();
 
             return category.Code;
         }

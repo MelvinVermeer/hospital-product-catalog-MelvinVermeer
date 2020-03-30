@@ -24,7 +24,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.Categories.Commands
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCategory request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCategory request, CancellationToken cancellationToken = default)
         {
             var category = await _context.Categories.FindAsync(request.Code);
 

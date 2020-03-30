@@ -21,7 +21,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.Categories.Queries
             _context = context;
         }
 
-        public async Task<List<Category>> Handle(GetAll request, CancellationToken cancellationToken)
+        public async Task<List<Category>> Handle(GetAll request, CancellationToken cancellationToken = default)
         {
             return await _context.Categories.ToListAsync();
         }
