@@ -1,3 +1,5 @@
+using AutoMapper;
+using Hospital.ProductCatalog.BusinessLogic;
 using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
 using Hospital.ProductCatalog.DataAccess;
 using MediatR;
@@ -24,7 +26,8 @@ namespace Hospital.ProductCatalog.API
             services.AddDbContext<ProductCatalogContext>(options => options.UseInMemoryDatabase("HospitalProductCatalog"));
 
             // Any reference will do here. I prefer a type reference over Assembly name, to prevent magic strings 
-            services.AddMediatR(typeof(GetAll)); 
+            services.AddMediatR(typeof(GetAll));
+            services.AddAutoMapper(typeof(HospitalProductMappingProfile));
 
             services.AddSwaggerGen(options =>
             {

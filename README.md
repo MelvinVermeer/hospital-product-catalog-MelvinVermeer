@@ -15,6 +15,7 @@ can be found on [/swagger/index.html](http://localhost:5000/swagger/index.html)
 - Swashbuckle - to automatically generate Swagger/OpenApi3 documentation and user Interface.
 - [MediatR](https://github.com/jbogard/MediatR) - to support CQRS Pattern (as talked about in our interview)
 - [Moq](https://github.com/moq/moq4) - Mocking framework for testing
+- [Automapper](https://github.com/AutoMapper/AutoMapper) - Used to convert Domain Objects to Data TransferObjects and Commands to Domain Objects
 
 ## Requirements
 
