@@ -1,5 +1,6 @@
 ﻿using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -19,12 +20,15 @@ namespace Hospital.ProductCatalog.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Category>>> Get()
         {
             return await _db.Categories.ToListAsync();
         }
 
         [HttpGet("{code}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Category>> Get(int code)
         {
             var category = await _db.Categories.FirstOrDefaultAsync(x => x.Code == code);
@@ -38,6 +42,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Category>> Post(Category category)
         {
             _db.Categories.Add(category);
@@ -47,6 +52,9 @@ namespace Hospital.ProductCatalog.API.Controllers
         }
 
         [HttpPut("{code}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<Category>> Put(int code, Category category)
         {
             if (code != category.Code)
@@ -68,6 +76,8 @@ namespace Hospital.ProductCatalog.API.Controllers
         }
 
         [HttpDelete("{code}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<Category>> Delete(int code)
         {
             var category = await _db.Categories.FirstOrDefaultAsync(x => x.Code == code);
