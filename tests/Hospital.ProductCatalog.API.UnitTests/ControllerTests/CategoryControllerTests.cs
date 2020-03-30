@@ -20,7 +20,7 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
         public async Task Get_Should_Send_Query_GetAll()
         {
             var mediatorMock = new Mock<IMediator>();
-            var controller = new CategoriesController(null, mediatorMock.Object);
+            var controller = new CategoriesController(mediatorMock.Object);
 
             await controller.Get();
 
@@ -31,7 +31,7 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
         public async Task Get_Should_Send_Query_GetByCode_If_Code_Provided()
         {
             var mediatorMock = new Mock<IMediator>();
-            var controller = new CategoriesController(null, mediatorMock.Object);
+            var controller = new CategoriesController(mediatorMock.Object);
             var code = 1;
 
             await controller.Get(code);
@@ -44,8 +44,8 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
         {
             var mediatorMock = new Mock<IMediator>();
             mediatorMock.Setup(x => x.Send(It.IsAny<GetByCode>(), It.IsAny<CancellationToken>()))
-                .Throws(new NotFoundException("a", 1));
-            var controller = new CategoriesController(null, mediatorMock.Object);
+                .Throws(new NotFoundException("Category", 1));
+            var controller = new CategoriesController(mediatorMock.Object);
             var code = 1;
 
             var result = (await controller.Get(code)).Result;
