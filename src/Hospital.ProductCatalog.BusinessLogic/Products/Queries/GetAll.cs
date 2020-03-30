@@ -1,5 +1,6 @@
-﻿using Hospital.ProductCatalog.DataAccess;
-using Hospital.ProductCatalog.Domain.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Hospital.ProductCatalog.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,22 +9,24 @@ using System.Threading.Tasks;
 
 namespace Hospital.ProductCatalog.BusinessLogic.Products.Queries
 {
-    public class GetAll : IRequest<List<Product>>
+    public class GetAll : IRequest<List<ProductDTO>>
     {
     }
 
-    public class GetAllQueryHandler : IRequestHandler<GetAll, List<Product>>
+    public class GetAllQueryHandler : IRequestHandler<GetAll, List<ProductDTO>>
     {
         private readonly ProductCatalogContext _context;
+        private readonly IMapper _mapper;
 
-        public GetAllQueryHandler(ProductCatalogContext context)
+        public GetAllQueryHandler(ProductCatalogContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<List<Product>> Handle(GetAll request, CancellationToken cancellationToken = default)
+        public async Task<List<ProductDTO>> Handle(GetAll request, CancellationToken cancellationToken = default)
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.ProjectTo<ProductDTO>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }
