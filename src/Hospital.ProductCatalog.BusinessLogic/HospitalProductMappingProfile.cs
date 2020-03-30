@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
 using Hospital.ProductCatalog.BusinessLogic.Products.Queries;
 using Hospital.ProductCatalog.Domain.Entities;
 using System;
@@ -13,6 +14,7 @@ namespace Hospital.ProductCatalog.BusinessLogic
         public HospitalProductMappingProfile()
         {
             CreateMap<Product, ProductDTO>();
+            CreateMap<CreateProduct, Product>();
 
             // For the outside world a barcode is just a string 
             CreateMap<Barcode, string>().ConvertUsing(src => src.ToString());
