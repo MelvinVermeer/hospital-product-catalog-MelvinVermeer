@@ -13,6 +13,7 @@ can be found on [/swagger/index.html](http://localhost:5000/swagger/index.html)
 - ASP.NET Core 3.1
 - Entity Framework Core
 - Swashbuckle - to automatically generate Swagger/OpenApi3 documentation and user Interface.
+- [MediatR](https://github.com/jbogard/MediatR) - to support CQRS Pattern (as talked about in our interview)
 
 ## Requirements
 
