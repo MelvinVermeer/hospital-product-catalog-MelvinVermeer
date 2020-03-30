@@ -1,11 +1,18 @@
 # Hospital Product Catalog
 
-This is product api created for a fictional hospital. Created for an assignment described [over here](/assignment.md).
+This is product api created for a fictional hospital. Created for an assignment described [over here](/assignment.md). 
+
+The API is created for other development teams in the hospital so they can develop client applications and can use hospitals product data however they want.
+
+This api exposes OpenApi 3 data about itself in the form of this [swagger.json](http://localhost:5000/swagger/v1/swagger.json) a more human readable version 
+can be found on [/swagger/index.html](http://localhost:5000/swagger/index.html)
+
 
 ## Technology stack
 
 - ASP.NET Core 3.1
 - Entity Framework Core
+- Swashbuckle - to automatically generate Swagger/OpenApi3 documentation and user Interface.
 
 ## Requirements
 
