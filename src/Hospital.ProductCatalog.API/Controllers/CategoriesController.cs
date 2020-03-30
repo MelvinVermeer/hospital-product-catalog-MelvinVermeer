@@ -45,7 +45,7 @@ namespace Hospital.ProductCatalog.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Category>> Post(CreateCategory createCategory)
+        public async Task<ActionResult> Post(CreateCategory createCategory)
         {
             var code = await _mediator.Send(createCategory);
             return CreatedAtAction(nameof(Get), new { code });
@@ -55,7 +55,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<Category>> Put(int code, UpdateCategory updateCategory)
+        public async Task<ActionResult> Put(int code, UpdateCategory updateCategory)
         {
             if (code != updateCategory.Code)
             {
@@ -77,7 +77,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         [HttpDelete("{code}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<Category>> Delete(int code)
+        public async Task<ActionResult> Delete(int code)
         {
             try
             {
