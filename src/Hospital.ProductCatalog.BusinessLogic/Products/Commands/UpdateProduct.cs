@@ -23,7 +23,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Commands
 
     // This Unit.Value represents a void type, since System.Void is not a valid return type in C#
     // Part of the MediatR package
-    public class UpdateProductHandler : IRequestHandler<UpdateProduct,Unit>
+    public class UpdateProductHandler : IRequestHandler<UpdateProduct, Unit>
     {
         private readonly ProductCatalogContext _context;
         private readonly IMapper _mapper;
@@ -52,8 +52,8 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Commands
             product.Category = category;
 
             await _context.SaveChangesAsync();
-            
-            return Unit.Value; 
+
+            return Unit.Value;
         }
     }
 }

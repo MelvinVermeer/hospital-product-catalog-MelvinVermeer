@@ -18,6 +18,11 @@ namespace Hospital.ProductCatalog.DataAccess
             modelBuilder.Entity<Category>().HasKey(x => x.Code);
             modelBuilder.Entity<Product>().HasKey(x => x.Code);
             modelBuilder.Entity<Barcode>().HasKey(x => x.Code);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Barcodes)
+                .WithOne()
+                .HasForeignKey(b => b.ProductCode);
         }
     }
 }

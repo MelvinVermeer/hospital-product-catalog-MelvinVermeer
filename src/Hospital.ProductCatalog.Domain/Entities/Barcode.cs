@@ -7,6 +7,7 @@
         // it is better than using primitives every where. 
 
         public string Code { get; set; }
+        public int ProductCode { get; set; }
 
         public override string ToString()
         {

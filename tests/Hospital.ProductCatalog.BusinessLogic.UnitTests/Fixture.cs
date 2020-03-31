@@ -12,7 +12,12 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests
 
         public static List<Product> Products = new List<Product>
         {
-            new Product { Code = 1, Description = "Asperin", Category = Categories[0] }
+            new Product {
+                Code = 1,
+                Description = "Asperin",
+                Category = Categories[0],
+                Barcodes = new List<Barcode> { new Barcode { Code = "000" } }
+            }
         };
     }
 }

@@ -2,6 +2,7 @@
 using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
 using Hospital.ProductCatalog.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Commands
@@ -25,12 +26,31 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Commands
             var command = new UpdateProduct
             {
                 Code = Fixture.Products[0].Code,
+                Barcodes = new List<string> { "000" },
                 Description = "Implants",
                 UnitOfMeasurement = "Box",
                 CategoryCode = Fixture.Categories[0].Code
             };
             await _handler.Handle(command);
             Assert.AreEqual("Implants", _context.Products.Find(1).Description);
+        }
+
+        [TestMethod]
+        public async Task Should_Update_A_Product_Barcodes()
+        {
+            var command = new UpdateProduct
+            {
+                Code = Fixture.Products[0].Code,
+                Barcodes = new List<string> { "000", "111" },
+                Description = "Implants",
+                UnitOfMeasurement = "Box",
+                CategoryCode = Fixture.Categories[0].Code
+            };
+
+            await _handler.Handle(command);
+
+            Assert.AreEqual(command.Barcodes[0], _context.Products.Find(1).Barcodes[0].ToString());
+            Assert.AreEqual(command.Barcodes[1], _context.Products.Find(1).Barcodes[1].ToString());
         }
 
         [TestMethod]
