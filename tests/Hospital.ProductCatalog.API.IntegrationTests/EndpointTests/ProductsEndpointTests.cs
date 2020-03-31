@@ -1,7 +1,6 @@
 ﻿using Hospital.ProductCatalog.API.IntegrationTests.Extensions;
 using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
 using Hospital.ProductCatalog.BusinessLogic.Products.Queries;
-using Hospital.ProductCatalog.Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +15,16 @@ namespace Hospital.ProductCatalog.API.IntegrationTests.EndpointTests
         public async Task A_New_Product_Can_Be_Added()
         {
             var client = NewHttpClient();
-            var product = new CreateProduct { 
-                Description = "Asperin", 
+            var product = new CreateProduct
+            {
+                Description = "Asperin",
                 CategoryCode = Fixture.Categories[0].Code,
-                UnitOfMeasurement = "box" 
+                UnitOfMeasurement = "box"
             };
-           
-            await client.PostAsJsonAsync("/products", product);
 
-            var result = await client.GetFromJsonAsync<ProductDTO>("/products/2");
+            var response = await client.PostAsJsonAsync("/products", product);
+
+            var result = await client.GetFromJsonAsync<ProductDTO>(response.Headers.Location.ToString());
             Assert.AreEqual(product.Description, result.Description);
         }
 
@@ -32,7 +32,8 @@ namespace Hospital.ProductCatalog.API.IntegrationTests.EndpointTests
         public async Task A_Product_Can_Be_Updated()
         {
             var client = NewHttpClient();
-            var updatedProduct = new UpdateProduct {
+            var updatedProduct = new UpdateProduct
+            {
                 Code = 1,
                 Description = "Ibuprofen",
                 CategoryCode = Fixture.Categories[0].Code,

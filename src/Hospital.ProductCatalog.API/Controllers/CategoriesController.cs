@@ -48,7 +48,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         public async Task<ActionResult> Post(CreateCategory createCategory)
         {
             var code = await _mediator.Send(createCategory);
-            return CreatedAtAction(nameof(Get), new { code });
+            return CreatedAtAction(nameof(Get), new { code }, null);
         }
 
         [HttpPut("{code}")]

@@ -16,9 +16,9 @@ namespace Hospital.ProductCatalog.API.IntegrationTests.EndpointTests
             var client = NewHttpClient();
             var category = new Category { Code = 2, Description = "Implants" };
 
-            await client.PostAsJsonAsync("/categories", category);
+            var response = await client.PostAsJsonAsync("/categories", category);
 
-            var result = await client.GetFromJsonAsync<Category>("/categories/2");
+            var result = await client.GetFromJsonAsync<Category>(response.Headers.Location.ToString());
             Assert.AreEqual(category.Description, result.Description);
         }
 
