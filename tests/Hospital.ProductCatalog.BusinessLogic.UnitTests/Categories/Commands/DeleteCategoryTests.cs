@@ -20,7 +20,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Categories.Commands
         }
 
         [TestMethod]
-        public async Task Should_Update_A_Category_Description()
+        public async Task Should_Delete_A_Category()
         {
             await _handler.Handle(new DeleteCategory(1));
             Assert.AreEqual(0, _context.Categories.Count());
