@@ -22,8 +22,8 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Categories.Queries
         {
             var result = await _handler.Handle(new GetAll());
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(Fixture.Categories.First().Code, result.First().Code);
-            Assert.AreEqual(Fixture.Categories.First().Description, result.First().Description);
+            Assert.AreEqual(Fixture.Categories[0].Code, result[0].Code);
+            Assert.AreEqual(Fixture.Categories[0].Description, result[0].Description);
         }
     }
 }

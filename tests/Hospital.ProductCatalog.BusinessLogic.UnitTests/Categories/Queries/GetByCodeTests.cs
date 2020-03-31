@@ -20,7 +20,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Categories.Queries
         public async Task Should_Return_Category_with_Given_Code()
         {
             var result = await _handler.Handle(new GetByCode(1));
-            Assert.AreEqual("Consumables", result.Description);
+            Assert.AreEqual(Fixture.Categories[0].Description, result.Description);
         }
 
         [TestMethod]
