@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.ProductCatalog.BusinessLogic.Exceptions;
 using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
+using Hospital.ProductCatalog.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -9,14 +10,14 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Queries
     [TestClass]
     public class CreateProductTests
     {
+        private readonly ProductCatalogContext _context;
         private readonly CreateProductHandler _handler;
 
         public CreateProductTests()
         {
-            var context = ProductCatalogContextFactory.Create();
+            _context = ProductCatalogContextFactory.Create();
             var mapper = MapperFactory.Create();
-
-            _handler = new CreateProductHandler(context, mapper);
+            _handler = new CreateProductHandler(_context, mapper);
         }
 
         [TestMethod]
@@ -28,9 +29,10 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Queries
                 UnitOfMeasurement = "Box",
                 CategoryCode = Fixture.Categories[0].Code
             };
-            var result = await _handler.Handle(command);
-            // Use a better assertion
-            Assert.AreEqual(2, result);
+            var newProductCode = await _handler.Handle(command);
+
+            Assert.IsNotNull(_context.Products.Find(newProductCode));
+            Assert.AreEqual(command.Description, _context.Products.Find(newProductCode).Description);
         }
 
         [TestMethod]
