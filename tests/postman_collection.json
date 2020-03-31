@@ -8,6 +8,85 @@
   },
   "item": [
     {
+      "name": "Products",
+      "description": "",
+      "item": [
+        {
+          "name": "http://localhost:5000/products",
+          "request": {
+            "url": "http://localhost:5000/products",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/products/1",
+          "request": {
+            "url": "http://localhost:5000/products/1",
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/products",
+          "request": {
+            "url": "http://localhost:5000/products",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"description\": \"Asperin\",\n\t\"barcodes\": [\"786300370042\"],\n\t\"quantity\": 1,\n\t\"categoryCode\":1,\n\t\"unitOfMeasurement\": \"Box\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/products",
+          "request": {
+            "url": "http://localhost:5000/products/1",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Ibuprofen\",\n\t\"barcodes\": [\"786300370042\"],\n\t\"quantity\": 1,\n\t\"categoryCode\":1,\n\t\"unitOfMeasurement\": \"Box\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:5000/products/1",
+          "request": {
+            "url": "http://localhost:5000/products/1",
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Categories",
       "description": "",
       "item": [
@@ -47,7 +126,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Implants\"\n}"
+              "raw": "{\n\t\"description\": \"Consumables\"\n}"
             },
             "description": ""
           },
@@ -67,7 +146,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Consumables\"\n}"
+              "raw": "{\n\t\"code\": 1,\n\t\"description\": \"Implants\"\n}"
             },
             "description": ""
           },
