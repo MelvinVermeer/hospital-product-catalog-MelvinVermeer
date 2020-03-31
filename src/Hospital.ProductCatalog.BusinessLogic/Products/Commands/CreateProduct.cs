@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hospital.ProductCatalog.BusinessLogic.Exceptions;
 using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
@@ -11,10 +12,9 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Commands
 {
     public class CreateProduct : IRequest<int>
     {
-        public int Code { get; set; }
         public string Description { get; set; }
         public List<string> Barcodes { get; set; }
-        public Category Category { get; set; }
+        public int CategoryCode { get; set; }
         public int Quantity { get; set; }
         public string UnitOfMeasurement { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -33,11 +33,19 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Commands
 
         public async Task<int> Handle(CreateProduct request, CancellationToken cancellationToken = default)
         {
+            var category = await _context.Categories.FindAsync(request.CategoryCode);
+
+            if (category == null)
+            {
+                throw new NotFoundException(nameof(Category), request.CategoryCode);
+            }
+
             var product = _mapper.Map<Product>(request);
-            
+            product.Category = category;
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
-            
+
             return product.Code;
         }
     }
