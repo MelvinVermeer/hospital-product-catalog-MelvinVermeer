@@ -15,6 +15,7 @@ namespace Hospital.ProductCatalog.BusinessLogic
         {
             CreateMap<Product, ProductDTO>();
             CreateMap<CreateProduct, Product>();
+            CreateMap<UpdateProduct, Product>();
 
             // For the outside world a barcode is just a string 
             CreateMap<Barcode, string>().ConvertUsing(src => src.ToString());
