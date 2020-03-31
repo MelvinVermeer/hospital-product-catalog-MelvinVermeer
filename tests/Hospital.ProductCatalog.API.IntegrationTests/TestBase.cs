@@ -25,10 +25,12 @@ namespace Hospital.ProductCatalog.API.IntegrationTests
                         using var scope = services.BuildServiceProvider().CreateScope();
                         var productsContext = scope.ServiceProvider.GetRequiredService<ProductCatalogContext>();
 
-                        // Normally I would seed my test data from here, but for now my test suite runs well
-                        // enough with an empty database
+                        // Clear and re-seed the database, to write predictable tests whenever we ask a NewHttpClient()
                         productsContext.Database.EnsureDeleted();
                         productsContext.Database.EnsureCreated();
+                        productsContext.Categories.AddRange(Fixture.Categories);
+                        productsContext.Products.AddRange(Fixture.Products);
+                        productsContext.SaveChanges();
                     });
                 });
 
