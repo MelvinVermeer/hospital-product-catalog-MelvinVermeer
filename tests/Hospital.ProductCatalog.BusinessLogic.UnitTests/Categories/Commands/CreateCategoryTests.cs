@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Categories.Queries
+namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Categories.Commands
 {
     [TestClass]
     public class CreateCategoryTests
