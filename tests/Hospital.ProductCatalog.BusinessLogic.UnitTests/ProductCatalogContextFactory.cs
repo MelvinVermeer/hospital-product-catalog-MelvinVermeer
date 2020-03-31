@@ -17,6 +17,7 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests
 
             context.Database.EnsureCreated();
             context.Categories.AddRange(Fixture.Categories);
+            context.Products.AddRange(Fixture.Products);
             context.SaveChanges();
             
             return context;

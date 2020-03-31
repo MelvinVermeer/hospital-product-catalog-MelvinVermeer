@@ -9,5 +9,10 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests
         {
             new Category { Code = 1, Description = "Consumables" }
         };
+
+        public static List<Product> Products = new List<Product>
+        {
+            new Product { Code = 1, Description = "Asperin", Category = Categories[0] }
+        };
     }
 }
