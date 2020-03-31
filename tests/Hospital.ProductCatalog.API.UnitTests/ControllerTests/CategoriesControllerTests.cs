@@ -78,7 +78,7 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
             Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
             var createdAt = result as CreatedAtActionResult;
             Assert.AreEqual(nameof(CategoriesController.Get), createdAt.ActionName);
-            Assert.AreEqual(new { code }.ToString(), createdAt.RouteValues.ToString());
+            Assert.AreEqual(code, createdAt.RouteValues["code"]);
         }
 
         [TestMethod]
