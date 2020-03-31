@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
 {
     [TestClass]
-    public class CategoryControllerTests
+    public class CategoriesControllerTests
     {
-        private readonly Category _category = new Category { Code = 1, Description = "Consumables" };
-
         [TestMethod]
         public async Task Get_Should_Send_Query_GetAll()
         {
