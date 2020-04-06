@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using FluentValidation;
+using Hospital.ProductCatalog.API.Middleware;
 
 namespace Hospital.ProductCatalog.API
 {
@@ -60,7 +61,7 @@ namespace Hospital.ProductCatalog.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
