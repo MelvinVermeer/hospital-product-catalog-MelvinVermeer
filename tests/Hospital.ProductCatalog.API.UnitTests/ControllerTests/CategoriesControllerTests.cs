@@ -1,8 +1,6 @@
 using Hospital.ProductCatalog.API.Controllers;
 using Hospital.ProductCatalog.BusinessLogic.Categories.Commands;
 using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
-using Hospital.ProductCatalog.BusinessLogic.Exceptions;
-using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -36,20 +34,6 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
             await controller.Get(code);
 
             mediatorMock.Verify(m => m.Send(It.Is<GetByCode>(x => x.Code == code), It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        [TestMethod]
-        public async Task Get_Should_Return_NotFound_If_Mediator_Throws_NotFound()
-        {
-            var code = 1;
-            var mediatorMock = new Mock<IMediator>();
-            mediatorMock.Setup(x => x.Send(It.IsAny<GetByCode>(), It.IsAny<CancellationToken>()))
-                .Throws(new NotFoundException(nameof(Category), code));
-            var controller = new CategoriesController(mediatorMock.Object);
-
-            var result = (await controller.Get(code)).Result;
-
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
@@ -116,20 +100,6 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
         }
 
         [TestMethod]
-        public async Task Put_Should_Return_NotFound_If_Mediator_Throws_NotFound()
-        {
-            var code = 1;
-            var mediatorMock = new Mock<IMediator>();
-            mediatorMock.Setup(x => x.Send(It.IsAny<UpdateCategory>(), It.IsAny<CancellationToken>()))
-                .Throws(new NotFoundException(nameof(Category), code));
-            var controller = new CategoriesController(mediatorMock.Object);
-
-            var result = await controller.Put(1, new UpdateCategory { Code = code });
-
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
-
-        [TestMethod]
         public async Task Delete_Should_Send_DeleteCategory_Command()
         {
             var code = 1;
@@ -150,20 +120,6 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
             var result = await controller.Delete(1);
 
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-        }
-
-        [TestMethod]
-        public async Task Delete_Should_Return_NotFound_If_Mediator_Throws_NotFound()
-        {
-            var code = 1;
-            var mediatorMock = new Mock<IMediator>();
-            mediatorMock.Setup(x => x.Send(It.IsAny<DeleteCategory>(), It.IsAny<CancellationToken>()))
-                .Throws(new NotFoundException(nameof(Category), code));
-            var controller = new CategoriesController(mediatorMock.Object);
-
-            var result = await controller.Delete(code);
-
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
     }
 }
