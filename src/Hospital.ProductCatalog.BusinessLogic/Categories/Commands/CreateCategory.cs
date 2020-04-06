@@ -1,4 +1,5 @@
-﻿using Hospital.ProductCatalog.DataAccess;
+﻿using FluentValidation;
+using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
 using System.Threading;
@@ -31,6 +32,14 @@ namespace Hospital.ProductCatalog.BusinessLogic.Categories.Commands
             await _context.SaveChangesAsync();
 
             return category.Code;
+        }
+    }
+
+    public class CreateCategoryValidator : AbstractValidator<CreateCategory>
+    {
+        public CreateCategoryValidator()
+        {
+            RuleFor(x => x.Description).NotEmpty();
         }
     }
 }

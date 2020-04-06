@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using FluentValidation;
 
 namespace Hospital.ProductCatalog.API
 {
@@ -28,6 +29,8 @@ namespace Hospital.ProductCatalog.API
             // Any reference will do here. I prefer a type reference over Assembly name, to prevent magic strings 
             services.AddMediatR(typeof(GetAll));
             services.AddAutoMapper(typeof(HospitalProductMappingProfile));
+            services.AddValidatorsFromAssemblyContaining(typeof(GetAll));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddSwaggerGen(options =>
             {
