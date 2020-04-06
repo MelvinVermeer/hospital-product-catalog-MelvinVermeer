@@ -1,5 +1,4 @@
-﻿using Hospital.ProductCatalog.BusinessLogic.Exceptions;
-using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
+﻿using Hospital.ProductCatalog.BusinessLogic.Products.Commands;
 using Hospital.ProductCatalog.BusinessLogic.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -32,14 +31,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductDTO>> Get(int code)
         {
-            try
-            {
-                return await _mediator.Send(new GetByCode(code));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+            return await _mediator.Send(new GetByCode(code));
         }
 
         [HttpPost]
@@ -61,15 +53,7 @@ namespace Hospital.ProductCatalog.API.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                await _mediator.Send(updateProduct);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-
+            await _mediator.Send(updateProduct);
             return NoContent();
         }
 
@@ -78,15 +62,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Delete(int code)
         {
-            try
-            {
-                await _mediator.Send(new DeleteProduct(code));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-
+            await _mediator.Send(new DeleteProduct(code));
             return NoContent();
         }
     }

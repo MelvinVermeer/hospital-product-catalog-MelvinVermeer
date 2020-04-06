@@ -1,6 +1,5 @@
 ﻿using Hospital.ProductCatalog.BusinessLogic.Categories.Commands;
 using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
-using Hospital.ProductCatalog.BusinessLogic.Exceptions;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -33,14 +32,8 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Category>> Get(int code)
         {
-            try
-            {
-                return await _mediator.Send(new GetByCode(code));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+            return await _mediator.Send(new GetByCode(code));
+
         }
 
         [HttpPost]
@@ -62,15 +55,7 @@ namespace Hospital.ProductCatalog.API.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                await _mediator.Send(updateCategory);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-
+            await _mediator.Send(updateCategory);
             return NoContent();
         }
 
@@ -79,15 +64,7 @@ namespace Hospital.ProductCatalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Delete(int code)
         {
-            try
-            {
-                await _mediator.Send(new DeleteCategory(code));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-
+            await _mediator.Send(new DeleteCategory(code));
             return NoContent();
         }
     }
