@@ -2,6 +2,8 @@
 using Hospital.ProductCatalog.BusinessLogic.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Queries
 {
@@ -14,7 +16,8 @@ namespace Hospital.ProductCatalog.BusinessLogic.UnitTests.Products.Queries
         {
             var context = ProductCatalogContextFactory.Create();
             var mapper = MapperFactory.Create();
-            _handler = new GetByCodeQueryHandler(context, mapper);
+            var loggerMock = new Mock<ILogger<GetByCodeQueryHandler>>();
+            _handler = new GetByCodeQueryHandler(context, mapper, loggerMock.Object);
         }
 
         [TestMethod]

@@ -5,6 +5,7 @@ using Hospital.ProductCatalog.DataAccess;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,11 +25,13 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Queries
     {
         private readonly ProductCatalogContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetByCodeQueryHandler> _logger;
 
-        public GetByCodeQueryHandler(ProductCatalogContext context, IMapper mapper)
+        public GetByCodeQueryHandler(ProductCatalogContext context, IMapper mapper, ILogger<GetByCodeQueryHandler> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ProductDTO> Handle(GetByCode request, CancellationToken cancellationToken = default)
@@ -40,7 +43,9 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Queries
 
             if (product == null)
             {
-                throw new NotFoundException(nameof(Product), request.Code);
+                var exception = new NotFoundException(nameof(Product), request.Code);
+                _logger.LogWarning(exception.Message);
+                throw exception;
             }
 
             return _mapper.Map<ProductDTO>(product);
