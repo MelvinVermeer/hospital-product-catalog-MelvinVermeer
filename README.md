@@ -18,6 +18,7 @@ To help you with some manual testing/exploration you could use [this postman col
 - [MediatR](https://github.com/jbogard/MediatR) - to support CQRS Pattern (as talked about in our interview)
 - [Moq](https://github.com/moq/moq4) - Mocking framework for testing
 - [Automapper](https://github.com/AutoMapper/AutoMapper) - Used to convert Domain Objects to Data TransferObjects and Commands to Domain Objects
+- [Fluent Validation](https://fluentvalidation.net/) - Used to validate incoming commands, example is shown in [CreateCategory.cs](/src/Hospital.ProductCatalog.BusinessLogic/Categories/Commands/CreateCategory.cs)
 
 ## Requirements
 
