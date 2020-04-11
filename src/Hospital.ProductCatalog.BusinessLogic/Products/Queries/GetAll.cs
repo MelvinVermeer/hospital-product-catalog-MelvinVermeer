@@ -26,7 +26,11 @@ namespace Hospital.ProductCatalog.BusinessLogic.Products.Queries
 
         public async Task<List<ProductDTO>> Handle(GetAll request, CancellationToken cancellationToken = default)
         {
-            return await _context.Products.Include(x => x.Barcodes).ProjectTo<ProductDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Products
+                .Include(x => x.Barcodes)
+                .ProjectTo<ProductDTO>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
