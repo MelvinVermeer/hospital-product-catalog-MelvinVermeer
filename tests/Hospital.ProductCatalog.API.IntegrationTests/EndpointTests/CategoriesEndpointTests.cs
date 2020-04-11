@@ -3,6 +3,7 @@ using Hospital.ProductCatalog.Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Hospital.ProductCatalog.API.IntegrationTests.EndpointTests
@@ -34,9 +35,18 @@ namespace Hospital.ProductCatalog.API.IntegrationTests.EndpointTests
         }
 
         [TestMethod]
-        public async Task A_Category_Can_Be_Deleted()
+        public async Task A_Category_Can_Not_Be_Deleted_When_Unauthenticated()
         {
             var client = NewHttpClient();
+            var response = await client.DeleteAsync("/categories/1");
+
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task A_Category_Can_Be_Deleted_When_Authenticated()
+        {
+            var client = NewAuthenticatedHttpClient();
             await client.DeleteAsync("/categories/1");
 
             var after = await client.GetFromJsonAsync<IEnumerable<Category>>("/categories");

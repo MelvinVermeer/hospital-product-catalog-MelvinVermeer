@@ -1,17 +1,20 @@
 using AutoMapper;
+using FluentValidation;
+using Hospital.ProductCatalog.API.Middleware;
 using Hospital.ProductCatalog.BusinessLogic;
 using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
 using Hospital.ProductCatalog.DataAccess;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
-using FluentValidation;
-using Hospital.ProductCatalog.API.Middleware;
+using System.Text;
 
 namespace Hospital.ProductCatalog.API
 {
@@ -32,6 +35,25 @@ namespace Hospital.ProductCatalog.API
             services.AddAutoMapper(typeof(HospitalProductMappingProfile));
             services.AddValidatorsFromAssemblyContaining(typeof(GetAll));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    // In any production situation will not store our signing key in source control.
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("SecretSigningKey")), 
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            services.AddAuthorization();
 
             services.AddSwaggerGen(options =>
             {
@@ -70,6 +92,9 @@ namespace Hospital.ProductCatalog.API
 
             app.UseRouting();
             
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

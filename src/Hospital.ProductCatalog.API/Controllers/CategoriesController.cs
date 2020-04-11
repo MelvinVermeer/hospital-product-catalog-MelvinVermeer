@@ -2,6 +2,7 @@
 using Hospital.ProductCatalog.BusinessLogic.Categories.Queries;
 using Hospital.ProductCatalog.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -59,6 +60,7 @@ namespace Hospital.ProductCatalog.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{code}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
