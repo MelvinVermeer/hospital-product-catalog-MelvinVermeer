@@ -39,6 +39,8 @@ To run the API run the following command
 dotnet run --project ./src/Hospital.ProductCatalog.API/Hospital.ProductCatalog.API.csproj
 ```
 
+> todo document the auth api
+
 Or open the solution in Visusal Studio 2019 and press `CTRL + F5` (run without debugging)
 
 ## Tests
