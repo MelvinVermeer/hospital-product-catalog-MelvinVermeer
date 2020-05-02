@@ -37,13 +37,13 @@ namespace Hospital.ProductCatalog.API.Controllers
 
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult> Post(CreateCategory createCategory)
-        {
-            var code = await _mediator.Send(createCategory);
-            return CreatedAtAction(nameof(Get), new { code }, null);
-        }
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //public async Task<ActionResult> Post(CreateCategory createCategory)
+        //{
+        //    var code = await _mediator.Send(createCategory);
+        //    return CreatedAtAction(nameof(Get), new { code }, null);
+        //}
 
         [HttpPut("{code}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
