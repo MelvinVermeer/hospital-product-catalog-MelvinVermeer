@@ -36,34 +36,34 @@ namespace Hospital.ProductCatalog.API.UnitTests.ControllerTests
             mediatorMock.Verify(m => m.Send(It.Is<GetByCode>(x => x.Code == code), It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        [TestMethod]
-        public async Task Post_Should_Send_CreateCategory_Command()
-        {
-            var mediatorMock = new Mock<IMediator>();
-            var controller = new CategoriesController(mediatorMock.Object);
-            var command = new CreateCategory();
+        //[TestMethod]
+        //public async Task Post_Should_Send_CreateCategory_Command()
+        //{
+        //    var mediatorMock = new Mock<IMediator>();
+        //    var controller = new CategoriesController(mediatorMock.Object);
+        //    var command = new CreateCategory();
 
-            await controller.Post(command);
+        //    await controller.Post(command);
 
-            mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
-        }
+        //    mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+        //}
 
-        [TestMethod]
-        public async Task Post_Should_Return_HttpCreated_With_CategoryCode()
-        {
-            var code = 1;
-            var mediatorMock = new Mock<IMediator>();
-            mediatorMock.Setup(x => x.Send(It.IsAny<CreateCategory>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(code);
-            var controller = new CategoriesController(mediatorMock.Object);
+        //[TestMethod]
+        //public async Task Post_Should_Return_HttpCreated_With_CategoryCode()
+        //{
+        //    var code = 1;
+        //    var mediatorMock = new Mock<IMediator>();
+        //    mediatorMock.Setup(x => x.Send(It.IsAny<CreateCategory>(), It.IsAny<CancellationToken>()))
+        //        .ReturnsAsync(code);
+        //    var controller = new CategoriesController(mediatorMock.Object);
 
-            var result = await controller.Post(new CreateCategory());
+        //    var result = await controller.Post(new CreateCategory());
 
-            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
-            var createdAt = result as CreatedAtActionResult;
-            Assert.AreEqual(nameof(CategoriesController.Get), createdAt.ActionName);
-            Assert.AreEqual(code, createdAt.RouteValues["code"]);
-        }
+        //    Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
+        //    var createdAt = result as CreatedAtActionResult;
+        //    Assert.AreEqual(nameof(CategoriesController.Get), createdAt.ActionName);
+        //    Assert.AreEqual(code, createdAt.RouteValues["code"]);
+        //}
 
         [TestMethod]
         public async Task Put_Should_Return_BadRequest_When_Code_Param_NotEquals_UpdateCommandCode()
