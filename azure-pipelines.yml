@@ -28,5 +28,5 @@ steps:
     custom: 'swagger'
     arguments: 'tofile --output $(Build.ArtifactStagingDirectory)/open-api.json ./src/Hospital.ProductCatalog.API/bin/Release/netcoreapp3.1/Hospital.ProductCatalog.API.dll v1'
 
-- script: npx openapi-diff $(Build.ArtifactStagingDirectory)/open-api.json https://gist.githubusercontent.com/MelvinVermeer/21a904a8db37e828b1c82d7f6f474969/raw/64b4e4cae0b9896e38d5092ac5a658b55ef9005c/sample-contract.json
+- script: npx openapi-diff https://gist.githubusercontent.com/MelvinVermeer/21a904a8db37e828b1c82d7f6f474969/raw/64b4e4cae0b9896e38d5092ac5a658b55ef9005c/sample-contract.json $(Build.ArtifactStagingDirectory)/open-api.json
   displayName: 'Api diff'
