@@ -26,7 +26,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'swagger'
-    arguments: 'tofile --output ./open-api.json ./src/Hospital.ProductCatalog.API/bin/Release/netcoreapp3.1/Hospital.ProductCatalog.API.dll v1'
+    arguments: 'tofile --output open-api.json ./src/Hospital.ProductCatalog.API/bin/Release/netcoreapp3.1/Hospital.ProductCatalog.API.dll v1'
 
 - task: swagger-diff@1
   inputs:
